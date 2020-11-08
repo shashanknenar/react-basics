@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
 
-function GreetComponent(props) {
-  console.log(props);
-  return <div>
-  <h1>Hello {props.name}</h1>
-  {props.children}
-  </div>
-}
-
+import Home from './components/Home'
+import About from './components/About'
+import Greet from './components/Greet'
 function App() {
   return (
-    <GreetComponent name="Shashank" children="hey there">
-    <p>Nenar</p>
-    </GreetComponent>
+    <Router>
+      <Switch>
+        <Route path="/" exact component= {Home} />
+        <Route path='/about' exact component= {About} />
+        <Route path="/greet/:name" exact component= {Greet} />
+      </Switch>
+    </Router>
   );
 }
 
