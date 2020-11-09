@@ -1,21 +1,39 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+
+const MyContext = React.createContext()
+
+function MyComponent(){
+    const {state, setState} = useContext(MyContext)
+    
+    useEffect(()=>{
+        setTimeout(()=>{
+            setState(state=>({
+                ...state,
+                name: 'Something cool'
+            }))
+        },1000)
+    }, [])
+
+    return <h1>Hello {state.name}</h1>
+}
+
 export default function Home(props){
 
-    const h1Ref = useRef();
-    const [counter, setCounter] = useState(0)
-    const [counter2, setCounter2] = useState(0)
-    
-    useEffect(() => {
-        console.log(h1Ref)
-    },[counter,counter2])
+    const [obj, setObj] = useState({
+        name: 'Shashank',
+        age:20,
+        prop: 'random'
+    })
 
-    return (
-    <div ref={h1Ref}>
-    <h1>{counter}</h1>
-    <h1>{counter2}</h1>
+    return <MyContext.Provider value={{state:obj,
+         setState:setObj}}>
+    <div>
+        <div>
+            <div>
+                <MyComponent/>
+            </div>
+        </div>
+    </div>
 
-    <button onClick={()=>setCounter(counter=>counter+1)}>Counter 1</button>
-    <button onClick={()=>setCounter2(counter=>counter+1)}>Counter 2</button>
-    </div>)
+    </MyContext.Provider>
 }
