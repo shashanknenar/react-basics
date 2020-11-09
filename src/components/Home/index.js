@@ -3,18 +3,17 @@ import React, { useContext, useEffect, useState } from 'react'
 const MyContext = React.createContext()
 
 function MyComponent(){
-    const {state, setState} = useContext(MyContext)
+    const state = useContext(MyContext)
     
-    useEffect(()=>{
-        setTimeout(()=>{
-            setState(state=>({
-                ...state,
-                name: 'Something cool'
-            }))
-        },1000)
-    }, [])
 
-    return <h1>Hello {state.name}</h1>
+    return <h1>Hello {state.name}<MyComponent2/>
+    </h1>
+}
+
+function MyComponent2(){
+    const state = useContext(MyContext)
+    
+    return <h1>Your age is {state.age}</h1>
 }
 
 export default function Home(props){
@@ -25,8 +24,7 @@ export default function Home(props){
         prop: 'random'
     })
 
-    return <MyContext.Provider value={{state:obj,
-         setState:setObj}}>
+    return <MyContext.Provider value={obj}>
     <div>
         <div>
             <div>
